@@ -7,11 +7,12 @@ public class SQLExecuter {
 			String userName = args [0];
 			String passwd   = args [1];
 						
-			String query = "select uname, passwd from users where uname = '" + userName + "'";
+			String query = "select uname, passwd from users where uname = ? ";
 			conn = DriverManager.getConnection ("jdbc:odbc:logistics", "admin", "letmein");
 			
-			Statement stmnt = conn.createStatement ();
-			ResultSet rs = stmnt.executeQuery (query);
+			PreparedStatement stmnt = conn.prepareStatement (query);
+			stmnt.setString(1, userName);
+			ResultSet rs = stmnt.executeQuery ();
 			while ( rs.next() ) {
 				// do something
 			}
